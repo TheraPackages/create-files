@@ -1,0 +1,27 @@
+{
+  "name": "create-files",
+  "main": "./lib/create-files",
+  "version": "0.0.0",
+  "description": "A short description of your package",
+  "keywords": [],
+  "activationCommands": {
+    "atom-workspace": "create-files:toggle"
+  },
+  "repository": "https://github.com/atom/create-files",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "atom-space-pen-views": "2.2.0",
+    "fs-extra": "^2.0.0",
+    "jquery": "2.1.4"
+  },
+  "consumedServices": {
+    "file-icons.element-icons": {
+      "versions": {
+        "1.0.0": "consumeElementIcons"
+      }
+    }
+  }
+}
