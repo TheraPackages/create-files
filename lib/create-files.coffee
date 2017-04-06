@@ -30,7 +30,7 @@ module.exports = CreateFiles =
     @subscriptions = new CompositeDisposable
 
     # Register command that toggles this view
-    @subscriptions.add atom.commands.add 'atom-workspace', 'create-files:toggle': => @toggle()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'create-files:toggle': (text) => @toggle(text)
     @subscriptions.add atom.commands.add 'atom-workspace', 'create-files:tremble': (text) => @tremble(text)
     @subscriptions.add atom.commands.add 'atom-workspace', 'create-files:esc': => @esc()
 
@@ -61,13 +61,18 @@ module.exports = CreateFiles =
   esc: ->
     @modalPanel.hide()
 
-  toggle: ->
+  toggle: (text) ->
+    console.log("create file #{text}")
     if @modalPanel.isVisible()
       @modalPanel.hide()
     else
       @modalPanel.show()
-      if(atom.project.getPaths)
-        @createFilesView.updatePath atom.project.getPaths()[0] + "/NewFile"
+      if text.detail
+        @createFilesView.updatePath text.detail
+      else
+        if(atom.project.getPaths)
+          @createFilesView.updatePath atom.project.getPaths()[0] + "/"
+
       #if(atom.workspace.getActiveTextEditor() && atom.workspace.getActiveTextEditor().getPath())
       #  @path = atom.workspace.getActiveTextEditor().getPath()
       #  @createFilesView.updatePath(@path + "NewFile")
