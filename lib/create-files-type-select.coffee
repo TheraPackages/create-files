@@ -4,7 +4,7 @@
 # @Time 2017-02-09 Cambridge Guildholl
 
 {SelectListView, $$,$} = require 'atom-space-pen-views'
-$ = require 'path'
+path = require 'path'
 
 
 module.exports =
@@ -27,30 +27,24 @@ CreateFileType: class CreateFileType extends SelectListView
 
 
  confirmed: (item) ->
+  @currentText = @createFileType.getText()
 
-   #to insure path was valid
-   #@path = atom.workspace.getActiveTextEditor().getPath()
+  @currentText = path.join(@currentText, "untitled") if @currentText.endsWith(path.sep)
 
-   #console.log @path
-   @currentText = @createFileType.getText()
+  #首先判断是否为空
+  if(@currentText)
+    dirmap  = path.parse(@currentText)
 
-   #首先判断是否为空
-   if(@currentText)
-    dirmap  = $.parse(@currentText)
-
-    tempdir = $.format(
+    tempdir = path.format(
           dir: dirmap.dir
           name: dirmap.name
           ext: item.suffix)
+    console.log(tempdir)
 
 
     @createFileType.setText(tempdir)
 
-   #如果不为空的情况下，再判断是否存在后缀
-   #如果有后缀
-   #如果没有后缀
-
-   @createFileType.focus()
+  @createFileType.focus()
 
 
  cancelled: ->
